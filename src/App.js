@@ -5,24 +5,10 @@ import './App.css';
 import { AppRoutes } from './routes';
 
 function App() {
-  const [text, setText] = useState('');
-  const changeInput = (t) => {
-    setText(t.target.value);
-  };
-
-  const handleClick = () => {
-    console.log(text);
-  };
-
   return (
     <BrowserRouter>
       <AppRoutes /> 
     </BrowserRouter>
-    // <div className="App">
-    //   <h1>Teste</h1>
-    //   <input className="input" onChange={(t) => changeInput(t)} value={text} type="text" />
-    //   <button onClick={handleClick} className="button" type="button">Clique</button>
-    // </div>
   );
 }
 
