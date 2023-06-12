@@ -1,14 +1,15 @@
-import { useState } from 'react';
 import { BrowserRouter } from 'react-router-dom';
-// import logo from './logo.svg';
 import './App.css';
+import { AppThemeProvider } from './contexts/ThemeContext';
 import { AppRoutes } from './routes';
 
 function App() {
   return (
-    <BrowserRouter>
-      <AppRoutes /> 
-    </BrowserRouter>
+    <AppThemeProvider>
+      <BrowserRouter>
+        <AppRoutes />
+      </BrowserRouter>
+    </AppThemeProvider>
   );
 }
 
