@@ -1,6 +1,8 @@
 import { useState } from 'react';
+import { BrowserRouter } from 'react-router-dom';
 // import logo from './logo.svg';
 import './App.css';
+import { AppRoutes } from './routes';
 
 function App() {
   const [text, setText] = useState('');
@@ -13,11 +15,14 @@ function App() {
   };
 
   return (
-    <div className="App">
-      <h1>Teste</h1>
-      <input className="input" onChange={(t) => changeInput(t)} value={text} type="text" />
-      <button onClick={handleClick} className="button" type="button">Clique</button>
-    </div>
+    <BrowserRouter>
+      <AppRoutes /> 
+    </BrowserRouter>
+    // <div className="App">
+    //   <h1>Teste</h1>
+    //   <input className="input" onChange={(t) => changeInput(t)} value={text} type="text" />
+    //   <button onClick={handleClick} className="button" type="button">Clique</button>
+    // </div>
   );
 }
 
