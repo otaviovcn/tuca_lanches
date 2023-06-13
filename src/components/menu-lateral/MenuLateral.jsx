@@ -19,6 +19,8 @@ import ListItemText from '@mui/material/ListItemText';
 import { ButtonToggleThemeMode } from '../ButtonToggleThemeMode';
 import { useNavigate } from 'react-router-dom'
 import { routesList } from '../../data';
+import { Container } from '@mui/material';
+import "./menuLateral.css"
 
 
 const drawerWidth = 240;
@@ -132,7 +134,13 @@ export const MenuLateral = ({ children }) => {
       </AppBar>
       <Drawer variant="permanent" open={open}>
         <DrawerHeader>
-        <img width="140px" src={require("../../assets/tuca_lanches_icon_sf.png")} alt="Tuca Lanches" />
+        <img
+          className="logo"
+          width="140px"
+          src={require("../../assets/tuca_lanches_icon_sf.png")}
+          alt="Tuca Lanches"
+          onClick={() => handleClick('/venda-do-produto', 'Venda do produto')}
+        />
           <IconButton onClick={handleDrawerClose} color={theme.palette.secondary.main}>
             {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
           </IconButton>
@@ -166,9 +174,14 @@ export const MenuLateral = ({ children }) => {
           ))}
         </List>
         <Divider />
-        <ButtonToggleThemeMode />
+        <Box component="main">
+          <ButtonToggleThemeMode />
+        </Box>
       </Drawer>
-      { children }
+      <Container sx={{ display: 'flex', padding: 8 }}>
+        { children }
+      </Container>
+        
     </Box>
   );
 }

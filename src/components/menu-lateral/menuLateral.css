@@ -1,0 +1,7 @@
+.logo {
+  cursor: pointer;
+}
+
+.logo:hover {
+  transform: scale(1.08);
+}
