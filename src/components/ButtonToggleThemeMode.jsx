@@ -62,12 +62,14 @@ export const ButtonToggleThemeMode = () => {
   
   const { toggleTheme, themeName } = useAppThemeContext();
 
+  // const checked = themeName === 'dark' ? checked : false;
+
   return (
     <div className="ButtonToggleThemeMode">
       <FormGroup>
       <FormControlLabel
         onClick={handleClick}
-        control={<MaterialUISwitch sx={{ m: 1 }} defaultChecked />}
+        control={ themeName === 'dark' ? <MaterialUISwitch sx={{ m: 1 }} checked /> : <MaterialUISwitch sx={{ m: 1 }} checkedIcon /> }
         // label={ themeName === 'light' ? 'Tema Claro' : 'Tema Escuro' }
       />
       </ FormGroup>
