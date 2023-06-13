@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/tuca_lanches/static/css/main.5cc0e107.css",
-    "main.js": "/tuca_lanches/static/js/main.ce978a98.js",
+    "main.js": "/tuca_lanches/static/js/main.49cc8cd1.js",
     "static/media/tuca_lanches_icon_sf.png": "/tuca_lanches/static/media/tuca_lanches_icon_sf.da8c45c79676aa1e22eb.png",
     "static/media/em-constucao.png": "/tuca_lanches/static/media/em-constucao.33cb041d21dc76764411.png",
     "index.html": "/tuca_lanches/index.html",
     "main.5cc0e107.css.map": "/tuca_lanches/static/css/main.5cc0e107.css.map",
-    "main.ce978a98.js.map": "/tuca_lanches/static/js/main.ce978a98.js.map"
+    "main.49cc8cd1.js.map": "/tuca_lanches/static/js/main.49cc8cd1.js.map"
   },
   "entrypoints": [
     "static/css/main.5cc0e107.css",
-    "static/js/main.ce978a98.js"
+    "static/js/main.49cc8cd1.js"
   ]
 }
