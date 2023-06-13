@@ -7,22 +7,22 @@ import BadgeIcon from '@mui/icons-material/Badge';
 export const routesList = [
   {
     title: 'Venda do produto',
-    path: '/tuca_lanches/venda-do-produto',
+    path: '/venda-do-produto',
     icon: <ShoppingCartIcon />,
   },
   {
     title: 'Página de Produtos',
-    path: '/tuca_lanches/pagina-de-produtos',
+    path: '/pagina-de-produtos',
     icon: <Inventory2Icon />,
   },
   {
     title: 'Relatórios',
-    path: '/tuca_lanches/relatorios',
+    path: '/relatorios',
     icon: <AssessmentIcon />,
   },
   {
     title: 'Cadastro',
-    path: '/tuca_lanches/cadastro-vendedor',
+    path: '/cadastro-vendedor',
     icon: <BadgeIcon />,
   }
 ];
