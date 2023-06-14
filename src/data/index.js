@@ -7,7 +7,7 @@ import BadgeIcon from '@mui/icons-material/Badge';
 export const routesList = [
   {
     title: 'Venda do produto',
-    path: '/venda-do-produto',
+    path: '/',
     icon: <ShoppingCartIcon />,
   },
   {
