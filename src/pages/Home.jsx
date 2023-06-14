@@ -6,7 +6,7 @@ import { Container, Typography } from '@mui/material';
 
 export const Home = () => {
   return (
-    <Container className="App" maxWidth="sm">
+    <Container className="App">
       <h1>Home</h1>
     </Container>
   )

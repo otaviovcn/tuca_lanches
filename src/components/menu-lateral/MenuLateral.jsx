@@ -139,7 +139,7 @@ export const MenuLateral = ({ children }) => {
           width="140px"
           src={require("../../assets/tuca_lanches_icon_sf.png")}
           alt="Tuca Lanches"
-          onClick={() => handleClick('', 'Venda do produto')}
+          onClick={() => handleClick('/', 'Venda do produto')}
         />
           <IconButton onClick={handleDrawerClose} color={theme.palette.secondary.main}>
             {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
@@ -178,7 +178,7 @@ export const MenuLateral = ({ children }) => {
           <ButtonToggleThemeMode />
         </Box>
       </Drawer>
-      <Container sx={{ display: 'flex', padding: 8 }}>
+      <Container width="100%" sx={{ display: 'flex', paddingTop: 8 }}>
         { children }
       </Container>
         
