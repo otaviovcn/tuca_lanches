@@ -36,7 +36,7 @@ export const Cadastro = () => {
     setUserToBeRegistered('');
   };
 
-  const updateUser = (id) => {
+  const updateUser = (id, localStorageKey) => {
     const newUsersList = { ...usersList };
 
     newUsersList[id] = userToBeRegistered;
@@ -45,7 +45,7 @@ export const Cadastro = () => {
     setUserToBeUpdated(0);
   };
 
-  const deleteUser = (id) => {
+  const deleteUser = (id, localStorageKey) => {
     const newUsersList = { ...usersList };
 
     delete newUsersList[id];

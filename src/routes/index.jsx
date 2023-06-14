@@ -14,7 +14,6 @@ export const AppRoutes = () => {
   return (
     <Routes>
       <Route path="/" exact element={Object.values(cadastro).length === 0 ? <Cadastro /> : <EmConstrucao />} />
-      {/* <Route path="/venda-do-produto" exact element={<EmConstrucao />} /> */}
       <Route path="/pagina-de-produtos" exact element={<PaginaDeProdutos />} />
       <Route path="/relatorios" exact element={<EmConstrucao />} />
       <Route path="/cadastro" exact element={<Cadastro />} />

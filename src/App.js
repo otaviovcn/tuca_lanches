@@ -1,23 +1,27 @@
 import { BrowserRouter } from 'react-router-dom';
 import './App.css';
 import { MenuLateral } from './components/menu-lateral/MenuLateral';
+import { AppRoutes } from './routes';
+
 import { CadastroProvider } from './contexts/CadastroContext';
 import { AppThemeProvider } from './contexts/ThemeContext';
-import { AppRoutes } from './routes';
+import { ProdutosProvider } from './contexts/ProdutosContext';
 
 function App() {
   return (
     <AppThemeProvider>
       <CadastroProvider>
-        <BrowserRouter>
+        <ProdutosProvider>
+          <BrowserRouter>
 
-          <MenuLateral>
-            <AppRoutes />
-          </MenuLateral>
+            <MenuLateral>
+              <AppRoutes />
+            </MenuLateral>
 
-        </BrowserRouter>
+          </BrowserRouter>
+        </ProdutosProvider>
       </CadastroProvider>
-    </AppThemeProvider>
+    </AppThemeProvider >
   );
 }
 
