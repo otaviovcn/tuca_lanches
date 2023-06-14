@@ -1,12 +1,12 @@
 import React, { useState, useEffect, useMemo } from 'react'
-import { getLocalStorage, setLocalStorage } from '../../utils/localStorage'
-import { Typography, Grid, CardContent, Card, Container, TextField } from '@mui/material';
+
+import { Typography, Grid, CardContent, Card, Container, TextField, Divider, Button } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
-import Divider from '@mui/material/Divider';
-import { Button } from '@mui/material';
 import { Box } from '@mui/system';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import EditIcon from '@mui/icons-material/Edit';
+
+import { getLocalStorage, setLocalStorage } from '../../utils/localStorage'
 import { useCadastroContext } from '../../contexts/CadastroContext';
 
 export const Cadastro = () => {
@@ -120,6 +120,7 @@ export const Cadastro = () => {
                    variant="contained"
                    color="primary"
                    fullWidth
+                   disabled={!userToBeRegistered}
                    sx={{ marginTop: theme.spacing(2) }}
                  >
                    Editar
@@ -130,6 +131,7 @@ export const Cadastro = () => {
                   variant="contained"
                   color="primary"
                   fullWidth
+                  disabled={!userToBeRegistered}
                   sx={{ marginTop: theme.spacing(2) }}
                 >
                   Adicionar

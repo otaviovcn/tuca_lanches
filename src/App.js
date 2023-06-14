@@ -9,7 +9,6 @@ function App() {
   return (
     <AppThemeProvider>
       <CadastroProvider>
-
         <BrowserRouter>
 
           <MenuLateral>
