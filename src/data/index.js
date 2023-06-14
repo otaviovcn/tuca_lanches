@@ -22,7 +22,7 @@ export const routesList = [
   },
   {
     title: 'Cadastro',
-    path: '/cadastro-vendedor',
+    path: '/cadastro',
     icon: <BadgeIcon />,
   }
 ];
