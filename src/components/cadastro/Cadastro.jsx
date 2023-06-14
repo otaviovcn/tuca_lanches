@@ -59,7 +59,7 @@ export const Cadastro = () => {
   }, [usersList]);
 
   return (
-    <Container className="cadastro" sx={{ marginTop: theme.spacing(2), width: "100vw" }}>
+    <Container className="cadastro" sx={{ marginTop: theme.spacing(2) }}>
       <Typography gutterBottom variant="h4" align="center" sx={{ fontSize: 30 }}>
         Cadastro de Usuários
       </Typography>

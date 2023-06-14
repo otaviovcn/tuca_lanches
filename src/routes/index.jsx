@@ -4,11 +4,13 @@ import { Navigate, Route, Routes } from 'react-router-dom'
 import { NotFound } from '../pages/NotFound'
 import { EmConstrucao } from '../components/em-construcao/EmConstrucao'
 import { Cadastro } from '../components/cadastro/Cadastro'
+import { useCadastroContext } from '../contexts/CadastroContext'
 
 export const AppRoutes = () => {
+  const { cadastro } = useCadastroContext();
   return (
     <Routes>
-      <Route path="/" exact element={<EmConstrucao />} />
+      <Route path="/" exact element={Object.values(cadastro).length === 0 ? <Cadastro /> : <EmConstrucao />} />
       <Route path="/venda-do-produto" exact element={<EmConstrucao />} />
       <Route path="/pagina-de-produtos" exact element={<EmConstrucao />} />
       <Route path="/relatorios" exact element={<EmConstrucao />} />
