@@ -1,5 +1,4 @@
-import React, { useState } from 'react'
-import Box from '@mui/material/Box';
+import React from 'react'
 import { useAppThemeContext } from '../contexts/ThemeContext'
 
 import { styled } from '@mui/material/styles';
@@ -62,15 +61,12 @@ export const ButtonToggleThemeMode = () => {
   
   const { toggleTheme, themeName } = useAppThemeContext();
 
-  // const checked = themeName === 'dark' ? checked : false;
-
   return (
     <div className="ButtonToggleThemeMode">
       <FormGroup>
       <FormControlLabel
         onClick={handleClick}
         control={ themeName === 'dark' ? <MaterialUISwitch sx={{ m: 1 }} checked /> : <MaterialUISwitch sx={{ m: 1 }} checkedIcon /> }
-        // label={ themeName === 'light' ? 'Tema Claro' : 'Tema Escuro' }
       />
       </ FormGroup>
     </div>

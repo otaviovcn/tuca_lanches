@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useMemo } from 'react'
 import { getLocalStorage, setLocalStorage } from '../../utils/localStorage'
 import { Typography, Grid, CardContent, Card, Container, TextField } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
@@ -6,13 +6,16 @@ import Divider from '@mui/material/Divider';
 import { Button } from '@mui/material';
 import { Box } from '@mui/system';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
-// import { useCadastroContext } from '../../contexts/CadastroContext';
+import EditIcon from '@mui/icons-material/Edit';
+import { useCadastroContext } from '../../contexts/CadastroContext';
 
 export const Cadastro = () => {
   const [userToBeRegistered, setUserToBeRegistered] = useState('');
+  const [isUpdate, setIsUpdate] = useState(false);
   const [usersList, setUsersList] = useState({});
+  const [userToBeUpdated, setUserToBeUpdated] = useState(0);
   const theme = useTheme();
-  // const { setCadastroContext } = useCadastroContext();
+  const { setCadastroContext } = useCadastroContext();
 
   useEffect(() => {
     const users = getLocalStorage('tuca_lanches_users');
@@ -21,10 +24,6 @@ export const Cadastro = () => {
     }
     setUsersList(users);
   }, []);
-
-  // useEffect(() => {
-  //   setCadastroContext(usersList);
-  // }, [usersList]);
 
   const addUser = () => {
     const newUsersList = { ...usersList };
@@ -37,11 +36,14 @@ export const Cadastro = () => {
     setUserToBeRegistered('');
   };
 
-  // const updateUser = (id) => {
-  //   const newUsersList = { ...usersList };
+  const updateUser = (id) => {
+    const newUsersList = { ...usersList };
 
-  //   newUsersList[id] = userToBeRegistered;
-  // };
+    newUsersList[id] = userToBeRegistered;
+    setLocalStorage('tuca_lanches_users', newUsersList);
+    setIsUpdate(false);
+    setUserToBeUpdated(0);
+  };
 
   const deleteUser = (id) => {
     const newUsersList = { ...usersList };
@@ -52,9 +54,13 @@ export const Cadastro = () => {
     setUsersList(newUsersList);
   };
 
+  useMemo(() => {
+    setCadastroContext(usersList);
+  }, [usersList]);
+
   return (
-    <Container className="cadastro">
-      <Typography gutterBottom variant="h4" align="center" sx={{ textSizeAdjust: 100 }}>
+    <Container className="cadastro" sx={{ marginTop: theme.spacing(2), width: "100vw" }}>
+      <Typography gutterBottom variant="h4" align="center" sx={{ fontSize: 30 }}>
         Cadastro de Usuários
       </Typography>
 
@@ -62,16 +68,25 @@ export const Cadastro = () => {
         <CardContent>
           <Grid container spacing={1}>
             <Grid item xs={12} sm={12}>
-              <Typography gutterBottom variant="h6" align="center" sx={{ color: theme.palette.secondary.dark }}>
+              <Typography gutterBottom variant="h6" align="center" sx={{ color: theme.palette.secondary.dark, fontSize: 19 }}>
                 Usuários Cadastrados
               </Typography>
               {Object.values(usersList).map((user, index) => (
                 <Box>
                   <Typography key={index} gutterBottom variant="h6" align="center" sx={{ color: theme.palette.secondary.dark }}>
                     {user}
-                    <Button onClick={() => deleteUser(index)}><DeleteForeverIcon  /></Button>
+                    <Button variant="text" onClick={() => deleteUser(index)}><DeleteForeverIcon /></Button>
+                    <Button
+                      variant="text"
+                      onClick={() => {
+                        setIsUpdate(true)
+                        setUserToBeRegistered(user)
+                        setUserToBeUpdated(index)
+                      }}
+                    >
+                      <EditIcon  />
+                    </Button>
                   </Typography>
-                  {/* <Button onClick={() => {}}>Editar</Button> */}
                 </Box>
               )
               )}
@@ -90,13 +105,25 @@ export const Cadastro = () => {
                 <TextField
                   label="Nome"
                   placeholder="Digite seu nome"
+                  color="primary"
                   variant="outlined"
                   fullWidth
                   value={userToBeRegistered}
                   onChange={(e) => setUserToBeRegistered(e.target.value)}
                   required
                 />
-                <Button
+                {isUpdate ?
+                   <Button
+                   onClick={() => updateUser(userToBeUpdated)}
+                   type="submit"
+                   variant="contained"
+                   color="primary"
+                   fullWidth
+                   sx={{ marginTop: theme.spacing(2) }}
+                 >
+                   Editar
+                 </Button> :
+                   <Button
                   onClick={addUser}
                   type="submit"
                   variant="contained"
@@ -105,7 +132,7 @@ export const Cadastro = () => {
                   sx={{ marginTop: theme.spacing(2) }}
                 >
                   Adicionar
-                </Button>
+                </Button>}
               </Grid>
 
             </Grid>

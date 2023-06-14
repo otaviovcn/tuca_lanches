@@ -4,14 +4,14 @@ const CadastroContext = createContext({});
 
 export const useCadastroContext = () => {
   return useContext(CadastroContext);
-}
+};
 
 export const CadastroProvider = ({ children }) => {
   const [cadastro, setCadastro] = useState({});
 
-  const setCadastroContext = (newCadastro) => {
+  const setCadastroContext = useCallback((newCadastro) => {
     setCadastro(newCadastro);
-  };
+  }, []);
 
   return (
     <CadastroContext.Provider value={{ cadastro, setCadastroContext }}>
