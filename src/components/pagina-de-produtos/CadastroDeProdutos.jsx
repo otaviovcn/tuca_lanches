@@ -23,13 +23,13 @@ export const CadastroDeProdutos = () => {
   const { produtos, setProdutosContext, productIsUpdating, updateProduct, setProductIsUpdatingContext } = useProdutosContext();
   const theme = useTheme();
 
-  useMemo(() => {
-    const productsList = getLocalStorage('tuca_lanches_produtos');
-    if (!productsList) {
-      setLocalStorage('tuca_lanches_produtos', productsData);
-    }
-    setProdutosContext(productsList);
-  }, []);
+  // useMemo(() => {
+  //   const productsList = getLocalStorage('tuca_lanches_produtos');
+  //   if (!productsList) {
+  //     setLocalStorage('tuca_lanches_produtos', productsData);
+  //   }
+  //   setProdutosContext(productsList);
+  // }, []);
 
   useMemo(() => {
     if (productIsUpdating) {

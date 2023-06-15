@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useMemo } from 'react';
 import { styled, useTheme } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import MuiDrawer from '@mui/material/Drawer';
@@ -21,6 +21,10 @@ import { useNavigate } from 'react-router-dom'
 import { routesList } from '../../data';
 import { Container } from '@mui/material';
 import "./menuLateral.css"
+
+import { getLocalStorage, setLocalStorage } from '../../utils/localStorage';
+import { useProdutosContext } from '../../contexts/ProdutosContext';
+import { productsData } from '../../data/productsData';
 
 
 const drawerWidth = 240;
@@ -95,6 +99,16 @@ export const MenuLateral = ({ children }) => {
   const theme = useTheme();
   const [open, setOpen] = useState(false);
   const [pageTitle, setPageTitle] = useState('Venda do produto');
+
+  const { setProdutosContext } = useProdutosContext();
+
+  useMemo(() => {
+    const productsList = getLocalStorage('tuca_lanches_produtos');
+    if (!productsList) {
+      setLocalStorage('tuca_lanches_produtos', productsData);
+    }
+    setProdutosContext(productsList);
+  }, []);
 
   const handleDrawerOpen = () => {
     setOpen(true);

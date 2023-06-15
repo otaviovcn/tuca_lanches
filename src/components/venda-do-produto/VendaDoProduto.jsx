@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Container, Typography, Tab, Tabs, Box, Button } from '@mui/material';
+import ProductionQuantityLimitsIcon from '@mui/icons-material/ProductionQuantityLimits';
 import PropTypes from 'prop-types';
 
 import { useProdutosContext } from '../../contexts/ProdutosContext';
@@ -52,14 +53,19 @@ export function VendaDoProduto() {
     <Box sx={{ width: '100%', background: 'white' }}>
       <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
         <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
-          <Tab label="Item One" {...a11yProps(0)} />
-          <Tab label="Item Two" {...a11yProps(1)} />
-          <Tab label="Item Three" {...a11yProps(2)} />
+          {
+            productsType.map((type) => {
+              if (type === "Carrinho") {
+                return <Tab icon={<ProductionQuantityLimitsIcon />} />
+              }
+              return <Tab label={type} />
+            })
+          }
         </Tabs>
       </Box>
       <Box sx={{ display: "flex", flexWrap: "wrap" }} value={value} index={0}>
         {
-          Object.values(produtos).map(({ id, productPrice, costPrice, type, name }) => {
+          Object.values(produtos).map(({ id, productPrice, costPrice, type, name, imgLink, category }) => {
             return (
               <>
                 {productsType[value] === type && (
@@ -70,6 +76,8 @@ export function VendaDoProduto() {
                       costPrice={costPrice}
                       type={type}
                       name={name}
+                      imgLink={imgLink}
+                      category={category}
                     />
                   </>
                 )}
