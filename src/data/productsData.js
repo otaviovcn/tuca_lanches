@@ -60,7 +60,7 @@ export const productsData = [
     category: 'Sem categoria',
   },
   {
-    id: 4,
+    id: 5,
     name: 'Refrigerante juninho',
     costPrice: 1.20,
     productPrice: 3.00,
@@ -69,7 +69,7 @@ export const productsData = [
     category: 'Sem categoria',
   },
   {
-    id: 5,
+    id: 6,
     name: 'Refrigerante lata',
     costPrice: 2.50,
     productPrice: 5.00,
@@ -78,7 +78,7 @@ export const productsData = [
     category: 'Sem categoria',
   },
   {
-    id: 6,
+    id: 7,
     name: 'Refrigerante litro',
     costPrice: 4.50,
     productPrice: 6.00,
@@ -87,7 +87,7 @@ export const productsData = [
     category: 'Sem categoria',
   },
   {
-    id: 7,
+    id: 8,
     name: 'Suco',
     costPrice: 1.50,
     productPrice: 3.00,
@@ -96,7 +96,7 @@ export const productsData = [
     category: 'Sem categoria',
   },
   {
-    id: 8,
+    id: 9,
     name: 'Suco da fruta',
     costPrice: 1.00,
     productPrice: 2.00,
@@ -105,7 +105,7 @@ export const productsData = [
     category: 'Sem categoria',
   },
   {
-    id: 9,
+    id: 10,
     name: 'Achocolatado',
     costPrice: 1.50,
     productPrice: 2.50,
@@ -114,7 +114,7 @@ export const productsData = [
     category: 'Sem categoria',
   },
   {
-    id: 10,
+    id: 11,
     name: 'Água',
     costPrice: 1.00,
     productPrice: 2.00,
@@ -123,7 +123,7 @@ export const productsData = [
     category: 'Sem categoria',
   },
   {
-    id: 11,
+    id: 12,
     name: 'Café',
     costPrice: 0.50,
     productPrice: 1.00,
