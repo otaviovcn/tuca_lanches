@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Container, Typography, Tab, Tabs, Box } from '@mui/material';
-import { useTheme } from '@mui/material/styles';
+// import { useTheme } from '@mui/material/styles';
 
 import { useProdutosContext } from '../../contexts/ProdutosContext';
 
@@ -22,7 +22,7 @@ import { useProdutosContext } from '../../contexts/ProdutosContext';
 
 export const VendaDoProduto = () => {
   const [value, setValue] = useState(0);
-  const theme = useTheme();
+  // const theme = useTheme();
   const productsType = ['Comida', 'Bebida']
 
   const { produtos } = useProdutosContext();
