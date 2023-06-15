@@ -1,5 +1,6 @@
 import { BrowserRouter } from 'react-router-dom';
 import './App.css';
+import './components/venda-do-produto/vendaDoProduto.css';
 import { MenuLateral } from './components/menu-lateral/MenuLateral';
 import { AppRoutes } from './routes';
 

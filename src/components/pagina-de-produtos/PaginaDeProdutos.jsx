@@ -5,6 +5,7 @@ import { useTheme } from '@mui/material/styles';
 
 import { CadastroDeProdutos } from './CadastroDeProdutos';
 import { ProdutosCadastrados } from './ProdutosCadastrados';
+const { removeLocalStorage } = require('../../utils/localStorage');
 
 export const PaginaDeProdutos = () => {
   const theme = useTheme();
@@ -24,6 +25,7 @@ export const PaginaDeProdutos = () => {
           </Grid>
         ))}
       </Grid>
+          <Button sx={{ background: "red"}} variant="contained" onClick={() => removeLocalStorage('tuca_lanches_produtos')}>Limpar Produtos</Button>
     </Container>
   )
 };
