@@ -29,7 +29,7 @@ export const CadastroDeProdutos = () => {
       setLocalStorage('tuca_lanches_produtos', productsData);
     }
     setProdutosContext(productsList);
-  }, [produtos]);
+  }, []);
 
   useMemo(() => {
     if (productIsUpdating) {

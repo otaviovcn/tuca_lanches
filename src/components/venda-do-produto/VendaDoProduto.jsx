@@ -4,10 +4,7 @@ import PropTypes from 'prop-types';
 
 import { useProdutosContext } from '../../contexts/ProdutosContext';
 import { CardProduct } from './CardProduct';
-// import Tabs from '@mui/material/Tabs';
-// import Tab from '@mui/material/Tab';
-// import Typography from '@mui/material/Typography';
-// import Box from '@mui/material/Box';
+
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -93,12 +90,6 @@ export function VendaDoProduto() {
           })
         }
       </Box>
-      {/* <TabPanel value={value} index={1}>
-        Item Two
-      </TabPanel> */}
-      <TabPanel value={value} index={2}>
-        Item Three
-      </TabPanel>
     </Box>
   );
 }
