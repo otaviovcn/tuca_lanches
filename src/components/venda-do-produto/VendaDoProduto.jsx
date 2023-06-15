@@ -1,75 +1,189 @@
 import React, { useState } from 'react';
-import { Container, Typography, Tab, Tabs, Box } from '@mui/material';
-// import { useTheme } from '@mui/material/styles';
+import { Container, Typography, Tab, Tabs, Box, Button } from '@mui/material';
+import PropTypes from 'prop-types';
 
 import { useProdutosContext } from '../../contexts/ProdutosContext';
+import { CardProduct } from './CardProduct';
+// import Tabs from '@mui/material/Tabs';
+// import Tab from '@mui/material/Tab';
+// import Typography from '@mui/material/Typography';
+// import Box from '@mui/material/Box';
 
-// function TabPanel(props) {
-//   const { children, value, index, ...other } = props;
+function TabPanel(props) {
+  const { children, value, index, ...other } = props;
 
-//   return (
-//     <div
-//       id={`vertical-tabpanel-${index}`}
-//     >
-//       {value === index && (
-//         <Box sx={{ p: 3 }}>
-//           <Typography>{value}</Typography>
-//         </Box>
-//       )}
-//     </div>
-//   );
-// }
+  return (
+    <div
+      role="tabpanel"
+      hidden={value !== index}
+      id={`simple-tabpanel-${index}`}
+      aria-labelledby={`simple-tab-${index}`}
+      {...other}
+    >
+      {value === index && (
+        <Box sx={{ p: 3 }}>
+          <Typography>{children}</Typography>
+        </Box>
+      )}
+    </div>
+  );
+}
 
-export const VendaDoProduto = () => {
-  const [value, setValue] = useState(0);
-  // const theme = useTheme();
-  const productsType = ['Comida', 'Bebida']
+TabPanel.propTypes = {
+  children: PropTypes.node,
+  index: PropTypes.number.isRequired,
+  value: PropTypes.number.isRequired,
+};
+
+function a11yProps(index) {
+  return {
+    id: `simple-tab-${index}`,
+    'aria-controls': `simple-tabpanel-${index}`,
+  };
+}
+
+export function VendaDoProduto() {
+  const [value, setValue] = React.useState(0);
+  const productsType = ['Comida', 'Bebida', 'Carrinho']
 
   const { produtos } = useProdutosContext();
-
-  const handleChange = (_event, newValue) => {
+  const handleChange = (event, newValue) => {
     setValue(newValue);
   };
 
-  // console.log(produtos);
-
   return (
-    <Container sx={{ paddingTop: 2, width: "100%" }}>
-      <Box
-        sx={{ flexGrow: 1,flexDirection: 'column' , bgcolor: 'background.paper', display: 'flex', height: 224 }}
-      >
-        <Tabs
-          orientation="horizontal"
-          variant="scrollable"
-          value={value}
-          onChange={handleChange}
-          aria-label="Vertical tabs example"
-          sx={{ borderRight: 1, borderColor: 'divider' }}
-        >
-          { productsType.map((type) => <Tab label={type} />) }
+    <Box sx={{ width: '100%', background: 'white' }}>
+      <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+        <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
+          <Tab label="Item One" {...a11yProps(0)} />
+          <Tab label="Item Two" {...a11yProps(1)} />
+          <Tab label="Item Three" {...a11yProps(2)} />
         </Tabs>
+      </Box>
+      <Box sx={{ display: "flex", flexWrap: "wrap" }} value={value} index={0}>
         {
           Object.values(produtos).map(({ id, productPrice, costPrice, type, name }) => {
             return (
-              <div
-                id={id}
-              >
-                {productsType[value] !== type && (
-                  <Box sx={{ p: 3 }}>
-                    <Typography>teste</Typography>
-                  </Box>
+              <>
+                {productsType[value] === type && (
+                  <>
+                    <CardProduct
+                      id={id}
+                      productPrice={productPrice}
+                      costPrice={costPrice}
+                      type={type}
+                      name={name}
+                    />
+                  </>
                 )}
-              </div>
+              </>
             );
           })
         }
-        {/* <TabPanel value={value} index={0}>
-          Item One
-        </TabPanel>
-        <TabPanel value={value} index={1}>
-          Item Two
-        </TabPanel> */}
+        {
+          Object.values(produtos).map((produto) => {
+            const { id, productPrice, costPrice, type, name } = produto;
+            return (
+              <>
+                {productsType[value] === "Carrinho" && (
+                  <CardProduct />
+                )}
+              </>
+            );
+          })
+        }
       </Box>
-    </Container>
+      {/* <TabPanel value={value} index={1}>
+        Item Two
+      </TabPanel> */}
+      <TabPanel value={value} index={2}>
+        Item Three
+      </TabPanel>
+    </Box>
   );
 }
+
+// import React, { useState } from 'react';
+// import { Container, Typography, Tab, Tabs, Box, Button } from '@mui/material';
+// import ProductionQuantityLimitsIcon from '@mui/icons-material/ProductionQuantityLimits';
+// import AddIcon from '@mui/icons-material/Add';
+
+
+// import { useProdutosContext } from '../../contexts/ProdutosContext';
+// import { CardProduct } from './CardProduct';
+
+
+// export const VendaDoProduto = () => {
+//   const [value, setValue] = useState(0);
+//   // const theme = useTheme();
+//   const productsType = ['Comida', 'Bebida', 'Carrinho']
+
+
+//   const { produtos } = useProdutosContext();
+
+
+//   const handleChange = (_event, newValue) => {
+//     setValue(newValue);
+//   };
+
+
+//   return (
+//     <Container sx={{ paddingTop: 2 }}>
+//       <Box
+//         sx={{ flexGrow: 1, flexDirection: 'column', bgcolor: 'background.paper', display: 'flex' }}
+//       >
+//         <Tabs
+//           orientation="horizontal"
+//           variant="scrollable"
+//           value={value}
+//           onChange={handleChange}
+//           aria-label="Vertical tabs example"
+//           sx={{ borderRight: 1, borderColor: 'divider' }}
+//         >
+//           {productsType.map((type) => {
+//             if (type === "Carrinho") {
+//               return <Tab icon={<ProductionQuantityLimitsIcon />} />
+//             }
+//             return <Tab label={type} />
+//           })}
+//         </Tabs>
+//         <>
+//           {
+//             Object.values(produtos).map(({ id, productPrice, costPrice, type, name }) => {
+//               return (
+//                 <>
+//                   {productsType[value] === type && (
+//                     // <Box sx={{ p: 3 }}>
+//                     //   <Typography>teste</Typography>
+//                     // </Box>
+//                     <>
+//                       <CardProduct
+//                         id={id}
+//                         productPrice={productPrice}
+//                         costPrice={costPrice}
+//                         type={type}
+//                         name={name}
+//                       />
+//                     </>
+//                   )}
+//                 </>
+//               );
+//             })
+//           }
+//           {/* {
+//             Object.values(produtos).map((produto) => {
+//               const { id, productPrice, costPrice, type, name } = produto;
+//               return (
+//                 <Container id={id}>
+//                   {productsType[value] === "Carrinho" && (
+//                     <CardProduct />
+//                   )}
+//                 </Container>
+//               );
+//             })
+//           } */}
+//         </>
+//       </Box>
+//     </Container>
+//   );
+// }
