@@ -23,14 +23,6 @@ export const CadastroDeProdutos = () => {
   const { produtos, setProdutosContext, productIsUpdating, updateProduct, setProductIsUpdatingContext } = useProdutosContext();
   const theme = useTheme();
 
-  // useMemo(() => {
-  //   const productsList = getLocalStorage('tuca_lanches_produtos');
-  //   if (!productsList) {
-  //     setLocalStorage('tuca_lanches_produtos', productsData);
-  //   }
-  //   setProdutosContext(productsList);
-  // }, []);
-
   useMemo(() => {
     if (productIsUpdating) {
       setProductName(produtos[updateProduct].name);
@@ -181,7 +173,7 @@ export const CadastroDeProdutos = () => {
               <Select
                 value={category}
                 label="Categoria"
-                onChange={(event) => setTypeFood(event.target.value)}
+                onChange={(event) => setCategory(event.target.value)}
                 sx={{ color: theme.palette.secondary.main, stopColor: 'red' }}
               >
                 {

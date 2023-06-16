@@ -1,11 +1,11 @@
-import React, { useState } from 'react'
+import React from 'react'
 
-import { Grid, CardContent, Container, TextField, Divider, Button } from '@mui/material';
+import { Grid, Container, Button } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
 
 import { CadastroDeProdutos } from './CadastroDeProdutos';
 import { ProdutosCadastrados } from './ProdutosCadastrados';
-const { removeLocalStorage } = require('../../utils/localStorage');
+import { removeLocalStorage } from '../../utils/localStorage';
 
 export const PaginaDeProdutos = () => {
   const theme = useTheme();

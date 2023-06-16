@@ -7,19 +7,22 @@ import { AppRoutes } from './routes';
 import { CadastroProvider } from './contexts/CadastroContext';
 import { AppThemeProvider } from './contexts/ThemeContext';
 import { ProdutosProvider } from './contexts/ProdutosContext';
+import { CarrinhoProvider } from './contexts/CarrinhoContext';
 
 function App() {
   return (
     <AppThemeProvider>
       <CadastroProvider>
         <ProdutosProvider>
-          <BrowserRouter>
+          <CarrinhoProvider>
+            <BrowserRouter>
 
-            <MenuLateral>
-              <AppRoutes />
-            </MenuLateral>
+              <MenuLateral>
+                <AppRoutes />
+              </MenuLateral>
 
-          </BrowserRouter>
+            </BrowserRouter>
+          </CarrinhoProvider>
         </ProdutosProvider>
       </CadastroProvider>
     </AppThemeProvider >
