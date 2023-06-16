@@ -1,52 +1,25 @@
 import React, { useMemo } from 'react';
-import { Typography, Tab, Tabs, Box, Button } from '@mui/material';
+import { Typography, Tab, Tabs, Box, Button, SpeedDialIcon, SpeedDial } from '@mui/material';
 import ProductionQuantityLimitsIcon from '@mui/icons-material/ProductionQuantityLimits';
-import PropTypes from 'prop-types';
 
 import { useProdutosContext } from '../../contexts/ProdutosContext';
 import { CardProduct } from './CardProduct';
 import { setLocalStorage, getLocalStorage, removeLocalStorage } from '../../utils/localStorage';
-import { useCarrinhoContext } from '../../contexts/CarrinhoContext';
+import { CarrinhoProvider, useCarrinhoContext } from '../../contexts/CarrinhoContext';
+
+// import Box from '@mui/material/Box';
+import BottomNavigation from '@mui/material/BottomNavigation';
+import BottomNavigationAction from '@mui/material/BottomNavigationAction';
+import RestoreIcon from '@mui/icons-material/Restore';
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import LocationOnIcon from '@mui/icons-material/LocationOn';
 
 
-function TabPanel(props) {
-  const { children, value, index, ...other } = props;
-
-  return (
-    <div
-      role="tabpanel"
-      hidden={value !== index}
-      id={`simple-tabpanel-${index}`}
-      aria-labelledby={`simple-tab-${index}`}
-      {...other}
-    >
-      {value === index && (
-        <Box sx={{ p: 3 }}>
-          <Typography>{children}</Typography>
-        </Box>
-      )}
-    </div>
-  );
-}
-
-TabPanel.propTypes = {
-  children: PropTypes.node,
-  index: PropTypes.number.isRequired,
-  value: PropTypes.number.isRequired,
-};
-
-function a11yProps(index) {
-  return {
-    id: `simple-tab-${index}`,
-    'aria-controls': `simple-tabpanel-${index}`,
-  };
-}
-
-export function VendaDoProduto() {
+export const VendaDoProduto = () => {
   const [value, setValue] = React.useState(0);
   const productsType = ['Comida', 'Bebida', 'Carrinho']
 
-  const { setCarrinhoContext } = useCarrinhoContext();
+  const { setCarrinhoContext, carrinho } = useCarrinhoContext();
 
   useMemo(() => {
     const cartStorage = getLocalStorage('tuca_lanches_cart');
@@ -61,6 +34,8 @@ export function VendaDoProduto() {
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
+
+  const carrinhoList = Object.values(carrinho);
 
   return (
     <Box sx={{ width: '100%', background: 'white' }}>
@@ -99,19 +74,71 @@ export function VendaDoProduto() {
           })
         }
         {
-          Object.values(produtos).map((produto) => {
-            // const { id, productPrice, costPrice, type, name } = produto;
-            return (
-              <>
-                {productsType[value] === "Carrinho" && (
-                  <CardProduct />
-                )}
-              </>
-            );
+          carrinhoList.map((produto) => {
+            const { id, productPrice, costPrice, type, name, imgLink, category } = produto;
+            return (carrinhoList.length === 0 ? <Typography>Nenhum produto no carrinho</Typography> :
+              (
+                <div >
+                  {productsType[value] === "Carrinho" && (
+                    <>
+                      <CardProduct
+                        id={id}
+                        productPrice={productPrice}
+                        costPrice={costPrice}
+                        type={type}
+                        name={name}
+                        imgLink={imgLink}
+                        category={category}
+                      />
+                    </>
+                  )}
+                </div>
+              )
+            )
           })
         }
+        {/* <Box sx={{ width: 500 }}>
+          <BottomNavigation
+            showLabels
+            value={value}
+            onChange={(event, newValue) => {
+              setValue(newValue);
+            }}
+          >
+            <BottomNavigationAction label="Recents" icon={<RestoreIcon />} />
+            <BottomNavigationAction label="Favorites" icon={<FavoriteIcon />} />
+            <BottomNavigationAction label="Nearby" icon={<LocationOnIcon />} />
+          </BottomNavigation>
+        </Box> */}
       </Box>
-      <Button sx={{ background: "red"}} variant="contained" onClick={() => removeLocalStorage('tuca_lanches_cart')}>Limpar Produtos</Button>
+      {
+        (productsType[value] === "Carrinho" && carrinhoList.length > 0 ) && (
+          <Box>
+            <BottomNavigation
+              showLabels
+              value={value}
+              onChange={(event, newValue) => {
+                setValue(newValue);
+              }}
+              sx={{ width: "100%" }}
+            >
+              <Button
+                onClick={() => { }}
+                type="button"
+                variant="contained"
+                color="success"
+                fullWidth
+                disabled={false}
+              // sx={{  }}
+              >
+                Finalizar
+              </Button>
+            </BottomNavigation>
+          </Box>
+        )
+      }
+
+      <Button sx={{ background: "red" }} variant="contained" onClick={() => removeLocalStorage('tuca_lanches_cart')}>Limpar Produtos</Button>
     </Box>
   );
 }
