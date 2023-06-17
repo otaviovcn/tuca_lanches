@@ -10,14 +10,6 @@ export const useCarrinhoContext = () => {
 export const CarrinhoProvider = ({ children }) => {
   const [carrinho, setCarrinho] = useState({});
 
-  // const [productIsUpdating, setProductIsUpdating] = useState(false);
-  // const [updateProduct, setUpdateProduct] = useState(0);
-
-  // const setProductIsUpdatingContext = (isUpdating=false, id=0) => {
-  //   setProductIsUpdating(isUpdating);
-  //   setUpdateProduct(id);
-  // };
-
   const setCarrinhoContext = useCallback((newCarrinho) => {
     setCarrinho(newCarrinho);
     if (newCarrinho) {
@@ -28,9 +20,6 @@ export const CarrinhoProvider = ({ children }) => {
   const value = {
     carrinho,
     setCarrinhoContext,
-    // setProductIsUpdatingContext,
-    // productIsUpdating,
-    // updateProduct,
   }
 
   return (

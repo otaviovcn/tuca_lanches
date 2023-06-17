@@ -17,13 +17,13 @@ export const VendidosProvider = ({ children }) => {
     }
   }, []);
 
-  useMemo(() => {
-    const relatoriosLocalStorage = getLocalStorage('tuca_lanches_relatorios');
-    if (relatoriosLocalStorage) {
-      setRelatorios(relatoriosLocalStorage);
-    }
-    setLocalStorage('tuca_lanches_relatorios', {});
-  }, []);
+  // useMemo(() => {
+  //   const relatoriosLocalStorage = getLocalStorage('tuca_lanches_relatorios');
+  //   if (relatoriosLocalStorage) {
+  //     setRelatorios(relatoriosLocalStorage);
+  //   }
+  //   setLocalStorage('tuca_lanches_relatorios', {});
+  // }, []);
 
   const value = {
     setVendidosContext,
