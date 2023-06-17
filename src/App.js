@@ -8,6 +8,7 @@ import { CadastroProvider } from './contexts/CadastroContext';
 import { AppThemeProvider } from './contexts/ThemeContext';
 import { ProdutosProvider } from './contexts/ProdutosContext';
 import { CarrinhoProvider } from './contexts/CarrinhoContext';
+const { VendidosProvider } = require('./contexts/VendidosContext');
 
 function App() {
   return (
@@ -15,13 +16,15 @@ function App() {
       <CadastroProvider>
         <ProdutosProvider>
           <CarrinhoProvider>
-            <BrowserRouter>
+            <VendidosProvider>
+              <BrowserRouter>
 
-              <MenuLateral>
-                <AppRoutes />
-              </MenuLateral>
+                <MenuLateral>
+                  <AppRoutes />
+                </MenuLateral>
 
-            </BrowserRouter>
+              </BrowserRouter>
+            </VendidosProvider>s
           </CarrinhoProvider>
         </ProdutosProvider>
       </CadastroProvider>

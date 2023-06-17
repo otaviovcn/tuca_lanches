@@ -25,6 +25,7 @@ import "./menuLateral.css"
 import { getLocalStorage, setLocalStorage } from '../../utils/localStorage';
 import { useProdutosContext } from '../../contexts/ProdutosContext';
 import { productsData } from '../../data/productsData';
+import { useVendidosContext } from '../../contexts/VendidosContext';
 
 
 const drawerWidth = 240;
@@ -101,13 +102,24 @@ export const MenuLateral = ({ children }) => {
   const [pageTitle, setPageTitle] = useState('Venda do produto');
 
   const { setProdutosContext } = useProdutosContext();
+  const { setVendidosContext } = useVendidosContext();
 
+  // Verifica se existe produtos no localStorage, caso não exista, cria uma lista de produtos
   useMemo(() => {
     const productsList = getLocalStorage('tuca_lanches_produtos');
     if (!productsList) {
       setLocalStorage('tuca_lanches_produtos', productsData);
     }
     setProdutosContext(productsList);
+  }, []);
+
+  // Verifica se existe relatorios no localStorage, caso exista, seta o valor no contexto
+  useMemo(() => {
+    const relatoriosLocalStorage = getLocalStorage('tuca_lanches_relatorios');
+    if (relatoriosLocalStorage) {
+      setVendidosContext(relatoriosLocalStorage);
+    }
+    setLocalStorage('tuca_lanches_relatorios', {});
   }, []);
 
   const handleDrawerOpen = () => {
