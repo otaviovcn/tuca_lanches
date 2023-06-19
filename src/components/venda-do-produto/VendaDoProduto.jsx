@@ -5,10 +5,58 @@ import ProductionQuantityLimitsIcon from '@mui/icons-material/ProductionQuantity
 import { useProdutosContext } from '../../contexts/ProdutosContext';
 import { CardProduct } from './CardProduct';
 import { setLocalStorage, getLocalStorage, removeLocalStorage } from '../../utils/localStorage';
-import { CarrinhoProvider, useCarrinhoContext } from '../../contexts/CarrinhoContext';
+import { useCarrinhoContext } from '../../contexts/CarrinhoContext';
+import { useRelatoriosContext } from '../../contexts/RelatoriosContext';
+import { actualData, actualHour, adicionaAoRelatorio } from '../../utils/relatorios';
 
 import LunchDiningIcon from '@mui/icons-material/LunchDining';
 import LocalBarIcon from '@mui/icons-material/LocalBar';
+
+
+
+// const adicionaAoRelatorio = (relatorio, carrinho) => {
+//   const relatorios = Object.values(getLocalStorage('tuca_lanches_relatorios'));
+//   const date = actualData();
+//   const { hour, timeFormat } = actualHour();
+
+//   const vendaAtual = {};
+//   const novoRelatorio = { ...relatorios };
+
+//   //  Organiza os dados da venda atual
+//   Object.values(carrinho).forEach(({
+//     name,
+//     productPrice,
+//     quantity,
+//     costPrice,
+//     category,
+//   }) => {
+//     vendaAtual[name] = {
+//       quantity,
+//       productPrice,
+//       costPrice,
+//       category,
+//     }
+//   });
+
+//   // Verifica se já existe um relatório para a data atual
+//   if (novoRelatorio[date]) {
+//     if (novoRelatorio[date][timeFormat]) {
+//       novoRelatorio[date][timeFormat] = {
+//         ...novoRelatorio[date][timeFormat],
+//         ...vendaAtual,
+//       };
+//       novoRelatorio[date][timeFormat] = vendaAtual;
+//     }
+//     novoRelatorio[date] = {
+//       ...novoRelatorio[date],
+//       [timeFormat]: vendaAtual,
+//     }
+//   } else {
+//     novoRelatorio[date] = {
+//       ...novoRelatorio[date],
+//       [timeFormat]: vendaAtual,
+//     }
+//   }
 
 
 export const VendaDoProduto = () => {
@@ -16,6 +64,7 @@ export const VendaDoProduto = () => {
   const productsType = ['Comida', 'Bebida', 'Carrinho']
 
   const { setCarrinhoContext, carrinho } = useCarrinhoContext();
+  const { setRelatoriosContext, relatorios } = useRelatoriosContext();
 
   useMemo(() => {
     const cartStorage = getLocalStorage('tuca_lanches_cart');
@@ -103,7 +152,11 @@ export const VendaDoProduto = () => {
         (productsType[value] === "Carrinho" && carrinhoList.length > 0 ) && (
           <Box>
               <Button
-                onClick={() => { }}
+                onClick={() => { 
+                  const novoRelatório = adicionaAoRelatorio(relatorios, carrinhoList);
+                  setRelatoriosContext(novoRelatório);
+                  setCarrinhoContext({});
+                }}
                 type="button"
                 variant="contained"
                 color="success"

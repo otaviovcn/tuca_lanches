@@ -8,7 +8,7 @@ import { CadastroProvider } from './contexts/CadastroContext';
 import { AppThemeProvider } from './contexts/ThemeContext';
 import { ProdutosProvider } from './contexts/ProdutosContext';
 import { CarrinhoProvider } from './contexts/CarrinhoContext';
-const { VendidosProvider } = require('./contexts/VendidosContext');
+const { RelatoriosProvider } = require('./contexts/RelatoriosContext');
 
 function App() {
   return (
@@ -16,7 +16,7 @@ function App() {
       <CadastroProvider>
         <ProdutosProvider>
           <CarrinhoProvider>
-            <VendidosProvider>
+            <RelatoriosProvider>
               <BrowserRouter>
 
                 <MenuLateral>
@@ -24,7 +24,7 @@ function App() {
                 </MenuLateral>
 
               </BrowserRouter>
-            </VendidosProvider>s
+            </RelatoriosProvider>s
           </CarrinhoProvider>
         </ProdutosProvider>
       </CadastroProvider>
