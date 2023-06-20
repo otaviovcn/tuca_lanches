@@ -72,7 +72,7 @@ export const Cadastro = () => {
                 Usuários Cadastrados
               </Typography>
               {Object.values(usersList).map((user, index) => (
-                <Box>
+                <Box key={index}>
                   <Typography key={index} gutterBottom variant="h6" align="center" sx={{ color: theme.palette.secondary.dark }}>
                     {user}
                     <Button variant="text" onClick={() => deleteUser(index)}><DeleteForeverIcon /></Button>

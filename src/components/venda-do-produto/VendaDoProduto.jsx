@@ -1,6 +1,5 @@
 import React, { useMemo, useState } from 'react';
 import { Typography, Tab, Tabs, Box, Button, Badge, useTheme } from '@mui/material';
-import ProductionQuantityLimitsIcon from '@mui/icons-material/ProductionQuantityLimits';
 
 import { useProdutosContext } from '../../contexts/ProdutosContext';
 import { CardProduct } from './CardProduct';
@@ -11,6 +10,7 @@ import { adicionaAoRelatorio } from '../../utils/relatorios';
 
 import LunchDiningIcon from '@mui/icons-material/LunchDining';
 import LocalBarIcon from '@mui/icons-material/LocalBar';
+import ProductionQuantityLimitsIcon from '@mui/icons-material/ProductionQuantityLimits';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import styled from '@emotion/styled';
 
@@ -93,6 +93,7 @@ export const VendaDoProduto = () => {
             );
           })
         }
+        {/* Confere se o carrinho tem algo */}
         {
           (carrinhoList.length === 0 && productsType[value] === "Carrinho") && (
             <Box>
@@ -102,6 +103,7 @@ export const VendaDoProduto = () => {
             </Box>
           )
         }
+        {/* Expõe os itens do carrinho */}
         {
           carrinhoList.map((produto, index) => {
             const { id, productPrice, costPrice, type, name, imgLink, category } = produto;
