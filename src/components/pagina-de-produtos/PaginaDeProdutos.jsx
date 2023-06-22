@@ -16,7 +16,7 @@ export const PaginaDeProdutos = () => {
   ]
 
   return (
-    <Container sx={{ marginTop: theme.spacing(5), width: theme.spacing(100), maxHeight: 80 }}>
+    <Container sx={{ marginTop: theme.spacing(1), width: theme.spacing(100), maxHeight: 80 }}>
       {containersList.map((item, index) => (
         <Box key={index} sx={{ width: '100%', background: 'white', marginTop: 2, marginBottom: 2 }}>
           {item}

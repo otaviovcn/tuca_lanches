@@ -50,7 +50,7 @@ export const VendaDoProduto = () => {
   const carrinhoList = Object.values(carrinho);
 
   return (
-    <Box sx={{ width: '100%', background: 'white' }}>
+    <Box sx={{ width: '100%', background: 'white', marginTop: theme.spacing(1) }}>
       <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
         <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
           {

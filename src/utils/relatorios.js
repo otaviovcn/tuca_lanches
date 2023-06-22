@@ -13,12 +13,12 @@ export const actualData = () => {
 // Retorna a hora atual no ato da venda, no formato hh:mm
 export const actualHour = () => {
   const date = new Date();
-  const hour = String(date.getHours()).padStart(2, '0');
+  const relativeHour = String(date.getHours()).padStart(2, '0');
   const minute = String(date.getMinutes()).padStart(2, '0');
 
-  const timeFormat = `${hour}:${minute}`;
+  const timeFormat = `${relativeHour}:${minute}`;
   return {
-    hour,
+    relativeHour,
     timeFormat,
   }
 }
@@ -26,7 +26,7 @@ export const actualHour = () => {
 export const adicionaAoRelatorio = (relatorios, carrinho) => {
   // const relatorios = Object.values(getLocalStorage('tuca_lanches_relatorios'));
   const date = actualData();
-  const { timeFormat } = actualHour();
+  const { timeFormat, relativeHour } = actualHour();
 
   const vendaAtual = {};
   const novoRelatorio = { ...relatorios };
@@ -44,10 +44,9 @@ export const adicionaAoRelatorio = (relatorios, carrinho) => {
       productPrice,
       costPrice,
       category,
+      relativeHour,
     }
   });
-
-  console.log(date, timeFormat);
 
   // Verifica se já existe um relatório para a data atual
   if (!novoRelatorio[date]) {
