@@ -6,6 +6,7 @@ import Accordion from '@mui/material/Accordion';
 import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf';
 
 import { useRelatoriosContext } from '../../contexts/RelatoriosContext';
 import { removeLocalStorage } from '../../utils/localStorage';
@@ -14,6 +15,7 @@ import { vendasPDF } from './relatorio-pdf/vendas';
 export const Relatorios = () => {
   const { relatorios } = useRelatoriosContext();
   const [dia, setDia] = useState();
+  // const [vendasPorHora, setVendasPorHora] = useState([]);
 
   useMemo(() => {
     const lastDay = Object.keys(relatorios);
@@ -25,7 +27,7 @@ export const Relatorios = () => {
 
   const theme = useTheme();
 
-  const produtosPorHora = () => {
+const produtosPorHora = () => {
     const vendasDoDia = relatorios[dia];
 
     if (!vendasDoDia) {
@@ -108,12 +110,27 @@ export const Relatorios = () => {
     return result.toFixed(2);
   };
 
+  
+  const vendasPorHora = [];
+  Object.entries(produtosPorHora()).forEach((item, index, array) => {
+    const productsList = [];
+    Object.entries(item[1])?.forEach((item, index, array) => {
+      const product = `${item[0]}: ${item[1]}(${calculaProporcao(array[index][1], array)}%)`
+      productsList.push(product);
+    })
+
+    vendasPorHora.push([
+      `${item[0]}:00 - ${item[0]}:59`,
+      { ul: productsList },
+    ])
+  });
+
   const dias = Object.keys(relatorios);
   return (
     <Container sx={{ background: "white", paddingTop: 8, marginTop: theme.spacing(1), display: "flex", flexDirection: "column", justifyItems: "center", alignContent: "center" }}>
       {Object.keys(relatorios).length > 0 ? (
         <>
-          <FormControl sx={{ width: "50%", padding: 1 }}>
+          <FormControl sx={{ width: theme.spacing(40), padding: 1 }}>
             <InputLabel>Selecione o dia</InputLabel>
             <Select
               value={dia}
@@ -144,8 +161,10 @@ export const Relatorios = () => {
             Vendas por intervalo de hora
           </Typography>
           {
-            Object.entries(produtosPorHora())?.map((item, index, array) => (
-                <Accordion>
+            Object.entries(produtosPorHora())?.map((item, index, array) => {
+
+              return (
+                <Accordion sx={{ width: theme.spacing(40) }}>
                   <AccordionSummary expandIcon={<ExpandMoreIcon />}>
                     <Typography variant="h6" sx={{ marginTop: 2 }} key={index}>
                       {item[0]}:00 - {item[0]}:59:
@@ -160,14 +179,15 @@ export const Relatorios = () => {
                     )}
                   </AccordionDetails>
                 </Accordion>
-            )
+              )
+            }
             )
           }
 
 
-          <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column' }}>
-            <Button variant="contained" color="primary" onClick={() => vendasPDF(relatorios)}>
-              Imprimir relatório
+          <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', bottom: 15, right: 15, flexDirection: 'column', position: "fixed" }}>
+            <Button variant="contained" color="error" onClick={() => vendasPDF({vendasPorHora, dia})}>
+              <PictureAsPdfIcon /> Abrir Relatório
             </Button>
           </Box>
         </>
