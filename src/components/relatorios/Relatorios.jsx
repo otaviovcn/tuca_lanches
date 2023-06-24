@@ -10,109 +10,26 @@ import PictureAsPdfIcon from '@mui/icons-material/PictureAsPdf';
 
 import { useRelatoriosContext } from '../../contexts/RelatoriosContext';
 import { removeLocalStorage } from '../../utils/localStorage';
+import { calculaProporcao, vendasPorKey, produtosPorHora, calculaLucro } from '../../utils/relatorios';
 import { vendasPDF } from './relatorio-pdf/vendas';
 
 export const Relatorios = () => {
   const { relatorios } = useRelatoriosContext();
   const [dia, setDia] = useState();
-  // const [vendasPorHora, setVendasPorHora] = useState([]);
+  const dias = Object.keys(relatorios);
 
   useMemo(() => {
     const lastDay = Object.keys(relatorios);
     if (lastDay.length > 0) {
       setDia(lastDay[lastDay.length - 1]);
     }
-  }, [])
-
+  }, []);
 
   const theme = useTheme();
+  // calculaLucro({relatorios, dia});
 
-const produtosPorHora = () => {
-    const vendasDoDia = relatorios[dia];
-
-    if (!vendasDoDia) {
-      return 'Sem vendas';
-    }
-
-    const result = {};
-
-    const horasDoDia = Object.keys(vendasDoDia);
-    horasDoDia.forEach((hora) => {
-      const nomesDosProdutos = Object.keys(vendasDoDia[hora]);
-      nomesDosProdutos.forEach((nomeDoProduto) => {
-        const relativeHour = vendasDoDia[hora][nomeDoProduto]['relativeHour'];
-
-        // result = {
-        //   11: {
-        //     coxinha: 1,
-        //     kibe: 3,
-        // }
-        //   }
-        // }
-
-        const quantity = vendasDoDia[hora][nomeDoProduto]['quantity'];
-        if (result[relativeHour]) {
-
-          if (result[relativeHour][nomeDoProduto]) {
-            result[relativeHour] = {
-              ...result[relativeHour],
-              [nomeDoProduto]: result[relativeHour][nomeDoProduto] + vendasDoDia[hora][nomeDoProduto]['quantity'],
-            }
-          } else {
-            result[relativeHour] = {
-              ...result[relativeHour],
-              [nomeDoProduto]: vendasDoDia[hora][nomeDoProduto]['quantity'],
-            }
-          }
-
-        } else {
-          result[relativeHour] = {
-            ...result[relativeHour],
-            [nomeDoProduto]: quantity,
-          }
-        }
-      });
-    });
-    console.log(result);
-    return result;
-  };
-
-  // produtosPorHora();
-
-  const vendasPorKey = (primaryKey, secondaryKey) => {
-    // vendasDoDia[dia][hora][produto]
-    const vendasDoDia = relatorios[dia];
-
-    const result = {};
-
-    if (!vendasDoDia) {
-      return 'Sem vendas';
-    }
-
-    const horasDoDia = Object.keys(vendasDoDia);
-    horasDoDia.forEach((hora) => {
-      const nomesDosProdutos = Object.keys(vendasDoDia[hora]);
-      nomesDosProdutos.forEach((nomeDoProduto) => {
-        const endKey = vendasDoDia[hora][nomeDoProduto][primaryKey];
-        if (result[endKey]) {
-          result[endKey] += vendasDoDia[hora][nomeDoProduto][secondaryKey];
-        } else {
-          result[endKey] = vendasDoDia[hora][nomeDoProduto][secondaryKey];;
-        }
-      });
-    });
-
-    return result;
-  };
-
-  const calculaProporcao = (itemCorrente, array) => {
-    const result = itemCorrente / array.reduce((acc, cur) => acc + cur[1], 0) * 100;
-    return result.toFixed(2);
-  };
-
-  
   const vendasPorHora = [];
-  Object.entries(produtosPorHora()).forEach((item, index, array) => {
+  Object.entries(produtosPorHora({relatorios, dia})).forEach((item) => {
     const productsList = [];
     Object.entries(item[1])?.forEach((item, index, array) => {
       const product = `${item[0]}: ${item[1]}(${calculaProporcao(array[index][1], array)}%)`
@@ -125,7 +42,6 @@ const produtosPorHora = () => {
     ])
   });
 
-  const dias = Object.keys(relatorios);
   return (
     <Container sx={{ background: "white", paddingTop: 8, marginTop: theme.spacing(1), display: "flex", flexDirection: "column", justifyItems: "center", alignContent: "center" }}>
       {Object.keys(relatorios).length > 0 ? (
@@ -149,7 +65,7 @@ const produtosPorHora = () => {
           </Typography>
 
           {
-            Object.entries(vendasPorKey('category', 'quantity'))?.map((item, index, array) => (
+            Object.entries(vendasPorKey({primaryKey:'category', secondaryKey:'quantity', relatorios, dia}))?.map((item, index, array) => (
               <Typography variant="h6" key={index} sx={{ fontSize: 17 }}>
                 {item[0]}: {item[1]}({calculaProporcao(array[index][1], array)}%)
               </Typography>
@@ -161,7 +77,7 @@ const produtosPorHora = () => {
             Vendas por intervalo de hora
           </Typography>
           {
-            Object.entries(produtosPorHora())?.map((item, index, array) => {
+            Object.entries(produtosPorHora({relatorios, dia}))?.map((item, index, array) => {
 
               return (
                 <Accordion sx={{ width: theme.spacing(40) }}>
@@ -184,9 +100,8 @@ const produtosPorHora = () => {
             )
           }
 
-
-          <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', bottom: 15, right: 15, flexDirection: 'column', position: "fixed" }}>
-            <Button variant="contained" color="error" onClick={() => vendasPDF({vendasPorHora, dia})}>
+          <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', bottom: 30, right: 15, flexDirection: 'column', position: "fixed" }}>
+            <Button variant="contained" color="error" onClick={() => vendasPDF({ vendasPorHora, dia })}>
               <PictureAsPdfIcon /> Abrir Relatório
             </Button>
           </Box>

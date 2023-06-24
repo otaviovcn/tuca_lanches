@@ -68,3 +68,143 @@ export const adicionaAoRelatorio = (relatorios, carrinho) => {
   setLocalStorage('tuca_lanches_relatorios', novoRelatorio);
   return novoRelatorio;
 }
+
+export const calculaProporcao = (itemCorrente, array) => {
+  const result = itemCorrente / array.reduce((acc, cur) => acc + cur[1], 0) * 100;
+  return result.toFixed(2);
+};
+
+export const vendasPorKey = ({ primaryKey, secondaryKey, relatorios, dia }) => {
+  // vendasDoDia[dia][hora][produto]
+  const vendasDoDia = relatorios[dia];
+
+  const result = {};
+
+  if (!vendasDoDia) {
+    return 'Sem vendas';
+  }
+
+  const horasDoDia = Object.keys(vendasDoDia);
+  horasDoDia.forEach((hora) => {
+    const nomesDosProdutos = Object.keys(vendasDoDia[hora]);
+    nomesDosProdutos.forEach((nomeDoProduto) => {
+      const endKey = vendasDoDia[hora][nomeDoProduto][primaryKey];
+      if (result[endKey]) {
+        result[endKey] += vendasDoDia[hora][nomeDoProduto][secondaryKey];
+      } else {
+        result[endKey] = vendasDoDia[hora][nomeDoProduto][secondaryKey];;
+      }
+    });
+  });
+
+  return result;
+};
+
+export const produtosPorHora = ({ relatorios, dia }) => {
+  const vendasDoDia = relatorios[dia];
+
+  if (!vendasDoDia) {
+    return 'Sem vendas';
+  }
+
+  const result = {};
+
+  const horasDoDia = Object.keys(vendasDoDia);
+  horasDoDia.forEach((hora) => {
+    const nomesDosProdutos = Object.keys(vendasDoDia[hora]);
+    nomesDosProdutos.forEach((nomeDoProduto) => {
+      const relativeHour = vendasDoDia[hora][nomeDoProduto]['relativeHour'];
+
+      // result = {
+      //   11: {
+      //     coxinha: 1,
+      //     kibe: 3,
+      //  },
+      // }
+
+      const quantity = vendasDoDia[hora][nomeDoProduto]['quantity'];
+      if (result[relativeHour]) {
+
+        if (result[relativeHour][nomeDoProduto]) {
+          result[relativeHour] = {
+            ...result[relativeHour],
+            [nomeDoProduto]: result[relativeHour][nomeDoProduto] + vendasDoDia[hora][nomeDoProduto]['quantity'],
+          }
+        } else {
+          result[relativeHour] = {
+            ...result[relativeHour],
+            [nomeDoProduto]: vendasDoDia[hora][nomeDoProduto]['quantity'],
+          }
+        }
+
+      } else {
+        result[relativeHour] = {
+          ...result[relativeHour],
+          [nomeDoProduto]: quantity,
+        }
+      }
+    });
+  });
+  return result;
+};
+
+export const calculaLucro = ({ relatorios, dia }) => {
+  const vendasDoDia = relatorios[dia];
+
+  if (!vendasDoDia) {
+    return 'Sem vendas';
+  }
+
+  const result = {};
+  // result = {
+  //  salgado:{
+  //   coxinha: {
+  //     quantity: 10,
+  //     productPrice: 3,
+  //     costPrice: 2,
+  //   },
+  // }
+
+  // },
+
+  const horasDoDia = Object.keys(vendasDoDia);
+  horasDoDia.forEach((hora) => {
+    const nomesDosProdutos = Object.keys(vendasDoDia[hora]);
+    nomesDosProdutos.forEach((nomeDoProduto) => {
+      const quantity = vendasDoDia[hora][nomeDoProduto]['quantity'];
+      const productPrice = vendasDoDia[hora][nomeDoProduto]['productPrice'];
+      const costPrice = vendasDoDia[hora][nomeDoProduto]['costPrice'];
+      const category = vendasDoDia[hora][nomeDoProduto]['category'];
+
+      if (result[category]) {
+        if (result[category][nomeDoProduto]) {
+          result[category][nomeDoProduto] = {
+            ...result[category][nomeDoProduto],
+            [nomeDoProduto]: {
+              quantity: result[category][nomeDoProduto].quantity + quantity,
+            }
+          }
+        } else {
+          result[category] = {
+            ...result[category],
+            [nomeDoProduto]: {
+              quantity,
+              productPrice,
+              costPrice,
+            }
+          }
+        }
+      } else {
+        result[category] = {
+          [nomeDoProduto]: {
+            quantity,
+            productPrice,
+            costPrice,
+          }
+        }
+      }
+    });
+  });
+  console.log(result);
+  return result;
+}
