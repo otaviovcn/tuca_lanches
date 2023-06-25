@@ -208,3 +208,49 @@ export const calculaLucro = ({ relatorios, dia }) => {
   console.log(result);
   return result;
 }
+
+export const calculaCustoOuLucro = ({ quantity, costPrice, productPrice, type, }) => {
+  if (type.toLowerCase() === 'custo') {
+    return (quantity * costPrice).toFixed(2);
+  }
+
+  if (type.toLowerCase() === 'lucro líquido') {
+    return ((quantity * productPrice) - (quantity * costPrice)).toFixed(2);
+  }
+
+  if (type.toLowerCase() === 'lucro bruto') {
+    return (quantity * productPrice).toFixed(2);
+  }
+
+
+}
+
+export const calculaPrecoTotal = ({ relatorios, dia }) => {
+  let lucroTotalBruto = 0;
+  let lucroTotalLiquido = 0;
+  let custoTotalEstimado = 0;
+  const custoPorCategoria = {};
+  const lucroPorCategoria = {};
+  Object.entries(calculaLucro({ relatorios, dia }))?.forEach((category) => {
+    let currentCost = 0;
+    let currentGrossProfit = 0;
+    let currentNetProfit = 0;
+    Object.entries(category[1])?.forEach((product) => {
+      lucroTotalBruto += Number(calculaCustoOuLucro({ ...product[1], type: 'lucro bruto'}));
+      lucroTotalLiquido += Number(calculaCustoOuLucro({ ...product[1], type: 'lucro líquido' }));
+      custoTotalEstimado += Number(calculaCustoOuLucro({ ...product[1], type: 'custo' }));
+      currentCost += Number(calculaCustoOuLucro({ ...product[1], type: 'custo' }));
+      currentNetProfit += Number(calculaCustoOuLucro({ ...product[1], type: 'lucro líquido' }));
+      currentGrossProfit += Number(calculaCustoOuLucro({ ...product[1], type: 'lucro bruto' }));
+    });
+    custoPorCategoria[category[0]] = currentCost;
+
+    if (!lucroPorCategoria[category[0]]) {
+      lucroPorCategoria[category[0]] = {};
+    }
+
+    lucroPorCategoria[category[0]]['grossProfit'] = currentGrossProfit;
+    lucroPorCategoria[category[0]]['netProfit'] = currentNetProfit;
+  })
+  return { lucroTotalBruto, lucroTotalLiquido, custoTotalEstimado, custoPorCategoria, lucroPorCategoria };
+}

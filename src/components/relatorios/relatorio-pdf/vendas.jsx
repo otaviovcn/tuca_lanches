@@ -1,7 +1,13 @@
 import pdfMake from "pdfmake/build/pdfmake";
 import pdfFonts from "pdfmake/build/vfs_fonts";
 
-export const vendasPDF = ({ vendasPorHora, dia }) => {
+export const vendasPDF = ({
+  vendasPorHora,
+  dia,
+  lucro,
+  custo,
+  lucroPorCategoria,
+}) => {
   pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
   const header = [
@@ -9,8 +15,11 @@ export const vendasPDF = ({ vendasPorHora, dia }) => {
   ];
 
   const content = [
-    { text: 'Tuca Lanches', fontSize: 14, bold: true, margin: [0, 20, 0, 8] },
-    // { text: 'Tables', style: 'header' },
+    { text: 'Tuca Lanches', style: "subheader", fontSize: 14, bold: true, margin: [0, 20, 0, 8] },
+    { text: 'Lucro estimado do dia:', fontSize: 14, bold: true, margin: [0, 20, 0, 8] },
+    { text: lucro, fontSize: 12 },
+    { text: 'Custo estimado do dia:', fontSize: 14, bold: true, margin: [0, 20, 0, 8] },
+    { text: custo, fontSize: 12 },
     // 'Official documentation is in progress, this document is just a glimpse of what is possible with pdfmake and its layout engine.',
     // { text: 'A simple table (no headers, no width specified, no spans, no styling)', style: 'subheader' },
     // 'The following table has nothing more than a body array',
@@ -70,7 +79,17 @@ export const vendasPDF = ({ vendasPorHora, dia }) => {
       style: 'tableExample',
       table: {
         body: vendasPorHora,
-        
+
+
+      }
+    },
+
+    { text: 'Teste:', fontSize: 14, bold: true, margin: [0, 20, 0, 8] },
+    {
+      style: 'tableExample',
+      table: {
+        body: vendasPorHora,
+
 
       }
     },
