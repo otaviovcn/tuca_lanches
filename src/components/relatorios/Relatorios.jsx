@@ -19,7 +19,10 @@ import {
   calculaPrecoTotal,
 } from '../../utils/relatorios';
 import { vendasPDF } from './relatorio-pdf/vendas';
-import { calculaVendasPorHora } from './relatorio-pdf/utils/index';
+import { 
+  calculaVendasPorHora,
+  calculaLucroPorCategoria,
+ } from './relatorio-pdf/utils';
 
 export const Relatorios = () => {
   const { relatorios } = useRelatoriosContext();
@@ -42,30 +45,12 @@ export const Relatorios = () => {
 
   const theme = useTheme();
 
-  
-  // const calculaPrecoTotal = () => {
-  //   let lucroTotalBruto = 0;
-  //   let lucroTotalLiquido = 0;
-  //   let custoTotalEstimado = 0;
-  //   const custoPorCategoria = {};
-  //   Object.entries(calculaLucro({ relatorios, dia }))?.forEach((category, index) => {
-  //     let currentCost = 0;
-  //     Object.entries(category[1])?.forEach((product, i, array) => {
-  //       lucroTotalBruto += Number(calculaCustoOuLucro({ ...product[1], type: 'lucro bruto'}));
-  //       lucroTotalLiquido += Number(calculaCustoOuLucro({ ...product[1], type: 'lucro líquido' }));
-  //       custoTotalEstimado += Number(calculaCustoOuLucro({ ...product[1], type: 'custo' }));
-  //       currentCost += Number(calculaCustoOuLucro({ ...product[1], type: 'custo' }));
-  //     });
-  //     custoPorCategoria[category[0]] = currentCost;
-  //   })
-  //   return { lucroTotalBruto, lucroTotalLiquido, custoTotalEstimado, custoPorCategoria };
-  // }
-
   const geraPDF = () => {
     const lucro = `Bruto - R$${calculaPrecoTotal({ relatorios, dia }).lucroTotalBruto.toFixed(2)} / Líquido - R$ ${calculaPrecoTotal({ relatorios, dia }).lucroTotalLiquido.toFixed(2)}`;
     const custo = `R$${calculaPrecoTotal({ relatorios, dia }).custoTotalEstimado.toFixed(2)}`
     const vendasPorHora = calculaVendasPorHora({listaDeProdutosPorHora});
-    vendasPDF({ dia, vendasPorHora, lucro, custo });
+    const lucroPorCategoria = calculaLucroPorCategoria({listaDoLucroPorCategoria, relatorios, dia});
+    vendasPDF({ dia, vendasPorHora, lucro, custo, lucroPorCategoria });
   }
 
   return (

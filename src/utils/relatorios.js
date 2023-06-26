@@ -222,7 +222,7 @@ export const calculaCustoOuLucro = ({ quantity, costPrice, productPrice, type, }
     return (quantity * productPrice).toFixed(2);
   }
 
-
+  return Number(quantity);
 }
 
 export const calculaPrecoTotal = ({ relatorios, dia }) => {
@@ -231,10 +231,12 @@ export const calculaPrecoTotal = ({ relatorios, dia }) => {
   let custoTotalEstimado = 0;
   const custoPorCategoria = {};
   const lucroPorCategoria = {};
+  const quantidadePorCategoria = {};
   Object.entries(calculaLucro({ relatorios, dia }))?.forEach((category) => {
     let currentCost = 0;
     let currentGrossProfit = 0;
     let currentNetProfit = 0;
+    let quantity = 0;
     Object.entries(category[1])?.forEach((product) => {
       lucroTotalBruto += Number(calculaCustoOuLucro({ ...product[1], type: 'lucro bruto'}));
       lucroTotalLiquido += Number(calculaCustoOuLucro({ ...product[1], type: 'lucro líquido' }));
@@ -242,15 +244,19 @@ export const calculaPrecoTotal = ({ relatorios, dia }) => {
       currentCost += Number(calculaCustoOuLucro({ ...product[1], type: 'custo' }));
       currentNetProfit += Number(calculaCustoOuLucro({ ...product[1], type: 'lucro líquido' }));
       currentGrossProfit += Number(calculaCustoOuLucro({ ...product[1], type: 'lucro bruto' }));
+      quantity += Number(calculaCustoOuLucro({ ...product[1], type: 'quantidade' }));
     });
     custoPorCategoria[category[0]] = currentCost;
 
-    if (!lucroPorCategoria[category[0]]) {
+    if (!lucroPorCategoria[category[0]] || !quantidadePorCategoria[category[0]]) {
       lucroPorCategoria[category[0]] = {};
+      // custoPorCategoria[category[0]] = {};
+      quantidadePorCategoria[category[0]] = {};
     }
 
+    quantidadePorCategoria[category[0]] = quantity;
     lucroPorCategoria[category[0]]['grossProfit'] = currentGrossProfit;
     lucroPorCategoria[category[0]]['netProfit'] = currentNetProfit;
   })
-  return { lucroTotalBruto, lucroTotalLiquido, custoTotalEstimado, custoPorCategoria, lucroPorCategoria };
+  return { lucroTotalBruto, lucroTotalLiquido, custoTotalEstimado, custoPorCategoria, lucroPorCategoria, quantidadePorCategoria };
 }
