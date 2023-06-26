@@ -32,7 +32,7 @@ export const vendasPDF = ({
 
       }
     },
-    { text: 'Teste:', fontSize: 14, bold: true, margin: [0, 20, 0, 8] },
+    { text: 'Prestação de contas por categoria:', fontSize: 14, bold: true, margin: [0, 20, 0, 8] },
   ];
 
   Object.entries(lucroPorCategoria).forEach((category) => {

@@ -21,6 +21,8 @@ import { useNavigate } from 'react-router-dom'
 import { routesList } from '../../data';
 import { Container } from '@mui/material';
 import "./menuLateral.css"
+import GitHubIcon from '@mui/icons-material/GitHub';
+import LinkedInIcon from '@mui/icons-material/LinkedIn';
 
 import { getLocalStorage, setLocalStorage } from '../../utils/localStorage';
 import { useProdutosContext } from '../../contexts/ProdutosContext';
@@ -160,13 +162,13 @@ export const MenuLateral = ({ children }) => {
       </AppBar>
       <Drawer variant="permanent" open={open}>
         <DrawerHeader>
-        <img
-          className="logo"
-          width="140px"
-          src={require("../../assets/tuca_lanches_icon_sf.png")}
-          alt="Tuca Lanches"
-          onClick={() => handleClick('/', 'Venda do produto')}
-        />
+          <img
+            className="logo"
+            width="140px"
+            src={require("../../assets/tuca_lanches_icon_sf.png")}
+            alt="Tuca Lanches"
+            onClick={() => handleClick('/', 'Venda do produto')}
+          />
           <IconButton onClick={handleDrawerClose} color={theme.palette.secondary.main}>
             {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
           </IconButton>
@@ -176,7 +178,7 @@ export const MenuLateral = ({ children }) => {
           {routesList.map(({ title, path, icon }) => (
             <ListItem key={title} disablePadding sx={{ display: 'block' }}>
               <ListItemButton
-              onClick={() => handleClick(path, title)}
+                onClick={() => handleClick(path, title)}
                 sx={{
                   minHeight: 48,
                   justifyContent: open ? 'initial' : 'center',
@@ -199,15 +201,52 @@ export const MenuLateral = ({ children }) => {
             </ListItem>
           ))}
         </List>
-        <Divider />
+        {/* <Divider />
         <Box component="main">
           <ButtonToggleThemeMode />
-        </Box>
+        </Box> */}
+        <Divider />
+        <List>
+          <ListItem disablePadding sx={{ display: 'block' }}>
+            <ListItemButton
+              href="https://www.linkedin.com/in/otavio-vinicius/"
+              target="_blank"
+              rel="noreferrer"
+              sx={{
+                minHeight: 48,
+                justifyContent: open ? 'initial' : 'center',
+                px: 2.5,
+                color: theme.palette.secondary.main,
+              }}
+            >
+              <LinkedInIcon sx={{ color: theme.palette.primary.main }} />
+              <ListItemText primary='Meu Linkedin' sx={{ opacity: open ? 1 : 0 }} />
+            </ListItemButton>
+
+          </ListItem>
+          <ListItem disablePadding sx={{ display: 'block' }}>
+            <ListItemButton
+              href="https://github.com/otaviovcn/tuca_lanches"
+              target="_blank"
+              rel="noreferrer"
+              sx={{
+                minHeight: 48,
+                justifyContent: open ? 'initial' : 'center',
+                px: 2.5,
+                color: theme.palette.secondary.main,
+              }}
+            >
+              <GitHubIcon sx={{ color: theme.palette.primary.main }} />
+              <ListItemText primary='Repositório do Projeto' sx={{ opacity: open ? 1 : 0 }} />
+            </ListItemButton>
+
+          </ListItem>
+        </List>
       </Drawer>
       <Container width="100%" sx={{ display: 'flex', paddingTop: 8 }}>
-        { children }
+        {children}
       </Container>
-        
+
     </Box>
   );
 }

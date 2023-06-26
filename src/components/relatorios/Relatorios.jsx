@@ -57,7 +57,7 @@ export const Relatorios = () => {
     <Container sx={{ background: "white", paddingTop: 8, marginTop: theme.spacing(1), display: "flex", flexDirection: "column", justifyItems: "center", alignContent: "center" }}>
       {Object.keys(relatorios).length > 0 ? (
         <>
-          <FormControl sx={{ width: theme.spacing(60), padding: 1 }}>
+          <FormControl sx={{ width: theme.spacing(50), padding: 1 }}>
             <InputLabel>Selecione o dia</InputLabel>
             <Select
               value={dia}
@@ -108,7 +108,7 @@ export const Relatorios = () => {
             listaDeProdutosPorHora?.map((item, index) => {
 
               return (
-                <Accordion sx={{ width: theme.spacing(60) }}>
+                <Accordion sx={{ width: theme.spacing(50) }}>
                   <AccordionSummary expandIcon={<ExpandMoreIcon />}>
                     <Typography variant="h6" sx={{ marginTop: 2 }} key={index}>
                       {item[0]}:00 - {item[0]}:59:
@@ -137,7 +137,7 @@ export const Relatorios = () => {
             listaDoLucroPorCategoria?.map((category, index) => {
 
               return (
-                <Accordion sx={{ width: theme.spacing(60) }}>
+                <Accordion sx={{ width: theme.spacing(50) }}>
                   <AccordionSummary expandIcon={<ExpandMoreIcon />}>
                     <Typography variant="h6" sx={{ marginTop: 2 }} key={index}>
                       {category[0]}:
@@ -172,7 +172,7 @@ export const Relatorios = () => {
             listaDoLucroPorCategoria?.map((category, index) => {
 
               return (
-                <Accordion sx={{ width: theme.spacing(60) }}>
+                <Accordion sx={{ width: theme.spacing(50) }}>
                   <AccordionSummary expandIcon={<ExpandMoreIcon />}>
                     <Typography variant="h6" sx={{ marginTop: 2 }} key={index}>
                       {category[0]}:
@@ -209,7 +209,7 @@ export const Relatorios = () => {
         </Typography>
       )
       }
-      <Button sx={{ marginTop: 10 }} variant="contained" color="error" onClick={() => removeLocalStorage('tuca_lanches_relatorios')}>
+      <Button sx={{ marginTop: 10, width:"100px" }} variant="contained" color="secondary" onClick={() => removeLocalStorage('tuca_lanches_relatorios')}>
         Remover relatorios
       </Button>
     </Container>

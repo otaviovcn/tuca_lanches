@@ -250,7 +250,6 @@ export const calculaPrecoTotal = ({ relatorios, dia }) => {
 
     if (!lucroPorCategoria[category[0]] || !quantidadePorCategoria[category[0]]) {
       lucroPorCategoria[category[0]] = {};
-      // custoPorCategoria[category[0]] = {};
       quantidadePorCategoria[category[0]] = {};
     }
 

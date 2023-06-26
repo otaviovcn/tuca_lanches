@@ -97,22 +97,22 @@ export const calculaLucroPorCategoria = ({ listaDoLucroPorCategoria, relatorios,
         {
           border: [true, true, true, true],
           fillColor: '#FBC02D',
-          text: lucroTotalBruto,
+          text: `R$${lucroTotalBruto}`,
         },
         {
           border: [true, true, true, true],
           fillColor: '#FBC02D',
-          text: lucroTotalLiquido,
+          text: `R$${lucroTotalLiquido}`,
         },
         {
           border: [true, true, true, true],
           fillColor: '#FBC02D',
-          text: custoTotal,
+          text: `R$${custoTotal}`,
         },
         {
           border: [true, true, true, true],
           fillColor: '#FBC02D',
-          text: `${quantidadeTotal} unidades`,
+          text: `${quantidadeTotal} unidade${quantidadeTotal > 1 ? 's' : ''}`,
         },
       ]
     )
